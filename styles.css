@@ -1,0 +1,539 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    transition: background-color 0.6s ease, color 0.6s ease;
+    overflow-x: hidden;
+}
+
+/* Dark Theme Styles */
+.dark-theme {
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+}
+
+.dark-theme .dark-content {
+    display: block;
+    opacity: 1;
+}
+
+.dark-theme .light-content {
+    display: none;
+    opacity: 0;
+}
+
+/* Light Theme Styles */
+.light-theme {
+    background-color: #ffd93d;
+    color: #2d2d2d;
+}
+
+.light-theme .dark-content {
+    display: none;
+    opacity: 0;
+}
+
+.light-theme .light-content {
+    display: block;
+    opacity: 1;
+}
+
+/* Light Switch Container */
+.light-switch-container {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+}
+
+.light-switch {
+    background: linear-gradient(145deg, #e0e0e0 0%, #efefef 40%, #d8d8d8 100%);
+    padding: 25px 20px;
+    border-radius: 8px;
+    box-shadow: 
+        0 2px 8px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 1px solid #c5c5c5;
+    width: 110px;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Toggle Switch Styles */
+.toggle-checkbox {
+    display: none;
+}
+
+.toggle-label {
+    display: block;
+    width: 60px;
+    height: 110px;
+    background: linear-gradient(to bottom, #f8f8f8 0%, #ffffff 50%, #f8f8f8 100%);
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.15),
+        inset 0 1px 2px rgba(255, 255, 255, 0.8);
+    border: 2px solid #b8b8b8;
+    overflow: hidden;
+}
+
+/* Inner frame of the switch */
+.toggle-label::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    right: 3px;
+    bottom: 3px;
+    border: 1px solid #d0d0d0;
+    border-radius: 2px;
+    pointer-events: none;
+}
+
+.toggle-switch {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 52px;
+    background: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 50%, #dadada 100%);
+    border-radius: 3px;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 
+        0 3px 6px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -2px 3px rgba(0, 0, 0, 0.1);
+    border: 1px solid #a8a8a8;
+}
+
+/* Rocker texture line */
+.toggle-switch::before {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 1.5px;
+    background: linear-gradient(to right, transparent, #c0c0c0 20%, #c0c0c0 80%, transparent);
+    border-radius: 1px;
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-switch {
+    bottom: auto;
+    top: 8px;
+}
+
+.toggle-checkbox:checked + .toggle-label .toggle-switch::before {
+    bottom: auto;
+    top: 6px;
+}
+
+/* Content Wrapper */
+.content-wrapper {
+    position: relative;
+    min-height: 100vh;
+    padding: 40px 20px;
+    padding-top: 350px; /* Make room for the light bulb */
+}
+
+/* Light Bulb Styles */
+.light-bulb-container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    padding-top: 0;
+    pointer-events: none; /* Allow clicking through the bulb area */
+}
+
+.bulb-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ceiling mount point */
+.ceiling-mount {
+    width: 20px;
+    height: 4px;
+    background: linear-gradient(to bottom, #1a1a1a, #2d2d2d);
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Rope hanging from ceiling */
+.rope {
+    width: 3px;
+    height: 30px;
+    background: repeating-linear-gradient(
+        0deg,
+        #8b7355 0px,
+        #a0826d 2px,
+        #8b7355 4px
+    );
+    position: relative;
+    box-shadow: 
+        inset 1px 0 1px rgba(0, 0, 0, 0.3),
+        1px 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Light glow effect */
+.light-glow {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255, 200, 80, 0.4) 0%, rgba(255, 180, 60, 0.2) 40%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.light-theme .light-glow {
+    opacity: 1;
+    background: radial-gradient(circle, rgba(255, 200, 80, 0.6) 0%, rgba(255, 180, 60, 0.3) 40%, transparent 70%);
+}
+
+/* Bulb glass - Globe shape */
+.bulb-glass {
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 250, 240, 0.3), rgba(230, 220, 200, 0.15));
+    border-radius: 50%;
+    position: relative;
+    z-index: 1;
+    box-shadow: 
+        inset -8px -8px 20px rgba(0, 0, 0, 0.08),
+        inset 8px 8px 20px rgba(255, 255, 255, 0.1),
+        0 0 0 1px rgba(200, 190, 170, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.8s ease;
+}
+
+.dark-theme .bulb-glass {
+    background: radial-gradient(circle at 30% 30%, rgba(180, 180, 180, 0.15), rgba(140, 140, 140, 0.1));
+}
+
+.light-theme .bulb-glass {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 240, 200, 0.5), rgba(255, 220, 150, 0.3));
+    box-shadow: 
+        inset -8px -8px 20px rgba(200, 150, 50, 0.15),
+        inset 8px 8px 20px rgba(255, 255, 255, 0.2),
+        0 0 20px rgba(255, 200, 100, 0.3),
+        0 0 40px rgba(255, 200, 100, 0.2);
+}
+
+/* Bulb neck */
+.bulb-neck {
+    width: 45px;
+    height: 15px;
+    background: linear-gradient(to top, 
+        rgba(200, 190, 170, 0.3) 0%,
+        rgba(180, 170, 150, 0.4) 50%,
+        rgba(160, 150, 130, 0.5) 100%
+    );
+    border-radius: 5px 5px 0 0;
+    position: relative;
+    margin-bottom: -2px;
+    box-shadow: 
+        inset 0 -2px 4px rgba(0, 0, 0, 0.1),
+        0 -1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Bulb base (screw threads) */
+.bulb-base {
+    width: 45px;
+    height: 40px;
+    background: linear-gradient(to top, #4a4a4a 0%, #2d2d2d 50%, #1a1a1a 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 3px 0;
+    box-shadow: 
+        inset 0 -2px 4px rgba(0, 0, 0, 0.4),
+        inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.screw-thread {
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, 
+        #3a3a3a 0%,
+        #5a5a5a 25%,
+        #6a6a6a 50%,
+        #5a5a5a 75%,
+        #3a3a3a 100%
+    );
+    box-shadow: 
+        0 1px 1px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border-radius: 1px;
+}
+
+/* Base contact (top of bulb - ceiling mount) */
+.base-contact {
+    width: 25px;
+    height: 8px;
+    background: radial-gradient(circle, #5a5a5a 0%, #3a3a3a 70%, #2a2a2a 100%);
+    border-radius: 50%;
+    box-shadow: 
+        inset 0 -2px 3px rgba(0, 0, 0, 0.4),
+        0 -1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Content Section */
+
+.content-section {
+    transition: opacity 0.6s ease;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Typography */
+h1 {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.dark-theme h1 {
+    color: #a8b2d1;
+}
+
+.light-theme h1 {
+    color: #2d2d2d;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 50px;
+    opacity: 0.8;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.dark-theme h2 {
+    color: #8892b0;
+}
+
+.light-theme h2 {
+    color: #1a1a1a;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.content-block {
+    padding: 30px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    z-index: 20;
+}
+
+.dark-theme .content-block {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .content-block {
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content-block:hover {
+    transform: translateY(-5px);
+}
+
+.dark-theme .content-block:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.light-theme .content-block:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.content-block p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* Resource Links */
+.resource-links {
+    margin-top: 15px;
+    padding-left: 20px;
+}
+
+.resource-links li {
+    margin-bottom: 10px;
+}
+
+.resource-links a {
+    color: inherit;
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+}
+
+.resource-links a:hover {
+    opacity: 0.7;
+}
+
+.dark-theme .resource-links a {
+    color: #8892b0;
+}
+
+.light-theme .resource-links a {
+    color: #2d2d2d;
+}
+
+/* Sources Section */
+.sources-section {
+    padding: 40px 20px;
+    border-top: 2px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    z-index: 20;
+}
+
+.dark-theme .sources-section {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .sources-section {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+.sources-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+.sources-list {
+    list-style: none;
+    padding: 0;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.sources-list li {
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark-theme .sources-list li {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.light-theme .sources-list li {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(0, 0, 0, 0.1);
+}
+
+.sources-list strong {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.sources-list a {
+    color: inherit;
+    text-decoration: underline;
+    word-break: break-all;
+    transition: opacity 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.sources-list a:hover {
+    opacity: 0.7;
+}
+
+.dark-theme .sources-list a {
+    color: #8892b0;
+}
+
+.light-theme .sources-list a {
+    color: #2d2d2d;
+}
+
+.sources-list em {
+    display: block;
+    margin-top: 3px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    .subtitle {
+        font-size: 1.2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .light-switch-container {
+        top: 20px;
+        right: 20px;
+    }
+    
+    .light-bulb-container {
+        transform: translateX(-50%) scale(0.8);
+    }
+    
+    .content-wrapper {
+        padding-top: 180px;
+    }
+}
